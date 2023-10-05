@@ -9,14 +9,11 @@ namespace Onion.Persistence.Repositories
     public class ReadRepository<T> : IReadRepository<T> where T : class, IEntityBase, new()
     {
         private readonly DbContext dbContext;
-
         public ReadRepository(DbContext dbContext)
         {
             this.dbContext = dbContext;
         }
-
         private DbSet<T> Table { get => dbContext.Set<T>(); }
-
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderby = null, bool enableTracking = false)
         {
             IQueryable<T> queryable = Table;
